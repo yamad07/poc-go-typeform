@@ -8,20 +8,26 @@ Definitely incomplete, but nothing else seems to even exist in Golang-world for 
 
 ```go
 import (
-    "log"
+	"log"
 
-    "github.com/0xdevalias/poc-typeform/api"
+	"github.com/davecgh/go-spew/spew"
+	"github.com/yamad07/poc-go-typeform/api"
 )
 
-def main() {
-    c := api.DefaultClient("MY-PERSONAL-ACCESS-TOKEN")
+func main() {
+	c := api.DefaultClient("EUqaoi488LNQ2tCp5hNWx7kmDCaKSUUeaVVQESoYsimC")
 
-    r, err := c.RetrieveForm("MY-FORM-ID")
-    if err != nil {
-        log.Fatalf("error: %v", err)
-    }
+	r, err := c.RetrieveForms()
+	if err != nil {
+		log.Fatalf("error: %v", err)
+	}
 
-    log.Printf("%#v", r)
+	log.Printf("%#v", r)
+
+	for _, f := range r.Items {
+		spew.Dump(f)
+	}
+
 }
 ```
 
