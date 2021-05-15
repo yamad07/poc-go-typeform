@@ -1,35 +1,24 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
-	"github.com/0xdevalias/poc-typeform/api"
+	"github.com/davecgh/go-spew/spew"
+	"github.com/yamad07/poc-go-typeform/api"
 )
 
 func main() {
-	c := api.DefaultClient("TODO")
+	c := api.DefaultClient("EUqaoi488LNQ2tCp5hNWx7kmDCaKSUUeaVVQESoYsimC")
 
-	r, err := c.RetrieveForm("TODO")
+	r, err := c.RetrieveForms()
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
 
 	log.Printf("%#v", r)
 
-	// Display survey structure
-	for _, field := range r.Fields {
-		fmt.Printf("(%s) '%s'\n", field.Type, field.Title)
-		for _, choice := range field.Properties.Choices {
-			fmt.Printf("  - %s\n", choice.Label)
-		}
-
-		for _, groupField := range field.Properties.Fields {
-			fmt.Printf("  (%s) '%s'\n", groupField.Type, groupField.Title)
-
-			for _, groupChoice := range groupField.Properties.Choices {
-				fmt.Printf("    - %s\n", groupChoice.Label)
-			}
-		}
+	for _, f := range r.Items {
+		spew.Dump(f)
 	}
+
 }

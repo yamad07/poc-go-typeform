@@ -78,6 +78,20 @@ const (
 	ConditionVarTypeEnd      ConditionVarType = "end"
 )
 
+type Forms struct {
+	TotalItems int64      `json:"total_items"`
+	PageCount  int64      `json:"page_count"`
+	Items      []FormItem `json:"items"`
+}
+
+type FormItem struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	Self  Href   `json:"self"`
+	Theme Href   `json:"theme"`
+	Links Links  `json:"_links"`
+}
+
 type Form struct {
 	ID              string           `json:"id"`
 	Title           string           `json:"title"`
@@ -180,7 +194,7 @@ type Field struct {
 }
 
 type FieldProperties struct {
-	Randomize              bool           `json:"randomize,omitempty"` // TODO: Not omitempty?
+	Randomize              bool           `json:"randomize,omitempty"`                // TODO: Not omitempty?
 	AllowMultipleSelection bool           `json:"allow_multiple_selection,omitempty"` // TODO: Not omitempty?
 	AllowOtherChoice       bool           `json:"allow_other_choice,omitempty"`
 	VerticalAlignment      bool           `json:"vertical_alignment,omitempty"`

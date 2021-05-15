@@ -22,8 +22,24 @@ func DefaultClient(apiKey string) *Client {
 	return &Client{restyClient: c}
 }
 
+func (c *Client) RetrieveForms() (*Forms, error) {
+	r, err := c.restyClient.R().
+		SetResult(Forms{}).
+		Get("/forms")
+	if err != nil {
+		return nil, err
+	}
+
+	switch r.StatusCode() {
+	case 200:
+		return r.Result().(*Forms), nil
+	default:
+		return nil, errorResponseFormatter(r)
+	}
+}
+
 // Form resource as retrieved by a client editing the form.
-func (c *Client) RetrieveForm(formId string) (*Form, error)  {
+func (c *Client) RetrieveForm(formId string) (*Form, error) {
 	r, err := c.restyClient.R().
 		SetPathParams(map[string]string{"form_id": formId}).
 		SetResult(Form{}).
@@ -41,7 +57,7 @@ func (c *Client) RetrieveForm(formId string) (*Form, error)  {
 }
 
 // RestyClient provides access to the underlying Resty client
-func (c *Client) RestyClient() (*resty.Client)  {
+func (c *Client) RestyClient() *resty.Client {
 	return c.restyClient
 }
 
